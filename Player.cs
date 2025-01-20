@@ -2,24 +2,44 @@ using Godot;
 
 public partial class Player : RigidBody3D
 {
+    [Export(PropertyHint.Range, "750, 3000")]
+    public float Thrust = 1000.0f;
+
+    [Export(PropertyHint.Range, "0, 1000")]
+    public float TorqueThrust = 100.0f;
+
     public override void _Ready()
     {
+        BodyEntered += OnBodyEntered;
     }
 
     public override void _Process(double delta)
     {
         if (Input.IsActionPressed("boost"))
         {
-            ApplyCentralForce(Basis.Y * (float)delta * 1000.0f);
+            ApplyCentralForce(Basis.Y * (float)delta * Thrust);
         }
         if (Input.IsActionPressed("rotate_left"))
         {
-            ApplyTorque(new Vector3(0, 0, 100.0f * (float)delta));
+            ApplyTorque(new Vector3(0, 0, TorqueThrust * (float)delta));
         }
 
         if (Input.IsActionPressed("rotate_right"))
         {
-            ApplyTorque(new Vector3(0, 0, -100.0f * (float)delta));
+            ApplyTorque(new Vector3(0, 0, -TorqueThrust * (float)delta));
+        }
+    }
+
+    private void OnBodyEntered(Node body)
+    {
+        if (body.IsInGroup("Goal"))
+        {
+            GD.Print("You win");
+        }
+
+        if (body.IsInGroup("Hazard"))
+        {
+            GD.Print("You crashed!");
         }
     }
 }
