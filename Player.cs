@@ -34,12 +34,29 @@ public partial class Player : RigidBody3D
     {
         if (body.IsInGroup("Goal"))
         {
-            GD.Print("You win");
+            CompleteLevel();
         }
 
         if (body.IsInGroup("Hazard"))
         {
-            GD.Print("You crashed!");
+            CrashSequence();
         }
+    }
+
+    private void CrashSequence()
+    {
+        GD.Print("KABOOM!");
+        CallDeferred("ReloadScene");
+    }
+
+    private void ReloadScene()
+    {
+        GetTree().ReloadCurrentScene();
+    }
+
+    private void CompleteLevel()
+    {
+        GD.Print("Level Complete");
+        GetTree().Quit();
     }
 }
