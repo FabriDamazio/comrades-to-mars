@@ -1,7 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://cg05cq6kr7tpi"]
+[gd_scene load_steps=10 format=3 uid="uid://cgtyv5igjwhnd"]
 
-[ext_resource type="Script" uid="uid://bm7f0ssnml3ob" path="res://level/LandingPad.cs" id="1_5gx2l"]
-[ext_resource type="PackedScene" uid="uid://dalktvtmmtbs" path="res://player.tscn" id="1_7lnir"]
+[ext_resource type="Script" uid="uid://bm7f0ssnml3ob" path="res://level/LandingPad.cs" id="1_lo0xd"]
+[ext_resource type="PackedScene" uid="uid://dalktvtmmtbs" path="res://player.tscn" id="2_oc35s"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5xgho"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -18,6 +18,9 @@ glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5xgho"]
 albedo_color = Color(0.4, 0.269333, 0.176, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lo0xd"]
+albedo_color = Color(0.796078, 0.262745, 0.831373, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u52ul"]
 albedo_color = Color(0.337255, 0.662745, 1, 1)
@@ -43,6 +46,12 @@ use_collision = true
 size = Vector3(30, 8, 5)
 material = SubResource("StandardMaterial3D_5xgho")
 
+[node name="Obstacle" type="CSGBox3D" parent="." groups=["Hazard"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.67271, 0)
+use_collision = true
+size = Vector3(3, 2, 3)
+material = SubResource("StandardMaterial3D_lo0xd")
+
 [node name="LaunchPad" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.2, 0)
 use_collision = true
@@ -54,8 +63,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.2, 0)
 use_collision = true
 size = Vector3(2, 0.4, 2)
 material = SubResource("StandardMaterial3D_vonw3")
-script = ExtResource("1_5gx2l")
-FilePath = "uid://cgtyv5igjwhnd"
+script = ExtResource("1_lo0xd")
+FilePath = "uid://cg05cq6kr7tpi"
 
-[node name="Player" parent="." instance=ExtResource("1_7lnir")]
+[node name="Player" parent="." instance=ExtResource("2_oc35s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.4, 0)

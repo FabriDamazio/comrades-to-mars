@@ -34,7 +34,8 @@ public partial class Player : RigidBody3D
     {
         if (body.IsInGroup("Goal"))
         {
-            CompleteLevel();
+            var landingPad = body as LandingPad;
+            CompleteLevel(landingPad.FilePath);
         }
 
         if (body.IsInGroup("Hazard"))
@@ -54,9 +55,14 @@ public partial class Player : RigidBody3D
         GetTree().ReloadCurrentScene();
     }
 
-    private void CompleteLevel()
+    private void CompleteLevel(string nextLevelFilePath)
     {
         GD.Print("Level Complete");
-        GetTree().Quit();
+        CallDeferred("ChangeScene", nextLevelFilePath);
+    }
+
+    private void ChangeScene(string sceneFilePath)
+    {
+        GetTree().ChangeSceneToFile(sceneFilePath);
     }
 }
