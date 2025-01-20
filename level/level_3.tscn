@@ -1,7 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://cgtyv5igjwhnd"]
+[gd_scene load_steps=10 format=3 uid="uid://cc6xjgwn7hfou"]
 
-[ext_resource type="Script" uid="uid://bm7f0ssnml3ob" path="res://level/LandingPad.cs" id="1_lo0xd"]
-[ext_resource type="PackedScene" uid="uid://dalktvtmmtbs" path="res://player.tscn" id="2_oc35s"]
+[ext_resource type="Script" uid="uid://bm7f0ssnml3ob" path="res://level/LandingPad.cs" id="1_octfv"]
+[ext_resource type="PackedScene" uid="uid://dalktvtmmtbs" path="res://player.tscn" id="2_ypwww"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5xgho"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -47,9 +47,9 @@ size = Vector3(30, 8, 5)
 material = SubResource("StandardMaterial3D_5xgho")
 
 [node name="Obstacle" type="CSGBox3D" parent="." groups=["Hazard"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.67271, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.25367, 0)
 use_collision = true
-size = Vector3(3, 2, 3)
+size = Vector3(8, 1, 3)
 material = SubResource("StandardMaterial3D_lo0xd")
 
 [node name="LaunchPad" type="CSGBox3D" parent="."]
@@ -63,8 +63,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.2, 0)
 use_collision = true
 size = Vector3(2, 0.4, 2)
 material = SubResource("StandardMaterial3D_vonw3")
-script = ExtResource("1_lo0xd")
-FilePath = "uid://cc6xjgwn7hfou"
+script = ExtResource("1_octfv")
+FilePath = "uid://cg05cq6kr7tpi"
 
-[node name="Player" parent="." instance=ExtResource("2_oc35s")]
+[node name="Player" parent="." instance=ExtResource("2_ypwww")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.4, 0)
