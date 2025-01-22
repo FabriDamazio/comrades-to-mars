@@ -8,6 +8,8 @@ public partial class Player : RigidBody3D
     [Export(PropertyHint.Range, "0, 1000")]
     public float TorqueThrust = 100.0f;
 
+    private bool _isTrasitioning = false;
+
     public override void _Ready()
     {
         BodyEntered += OnBodyEntered;
@@ -32,22 +34,29 @@ public partial class Player : RigidBody3D
 
     private void OnBodyEntered(Node body)
     {
-        if (body.IsInGroup("Goal"))
+        if (_isTrasitioning is false)
         {
-            var landingPad = body as LandingPad;
-            CompleteLevel(landingPad.FilePath);
-        }
+            if (body.IsInGroup("Goal"))
+            {
+                var landingPad = body as LandingPad;
+                CompleteLevel(landingPad.FilePath);
+            }
 
-        if (body.IsInGroup("Hazard"))
-        {
-            CrashSequence();
+            if (body.IsInGroup("Hazard"))
+            {
+                CrashSequence();
+            }
         }
     }
 
     private void CrashSequence()
     {
         GD.Print("KABOOM!");
-        CallDeferred("ReloadScene");
+        SetProcess(false);
+        _isTrasitioning = true;
+        var tween = CreateTween();
+        tween.TweenInterval(1);
+        tween.TweenCallback(Callable.From(ReloadScene));
     }
 
     private void ReloadScene()
@@ -58,7 +67,11 @@ public partial class Player : RigidBody3D
     private void CompleteLevel(string nextLevelFilePath)
     {
         GD.Print("Level Complete");
-        CallDeferred("ChangeScene", nextLevelFilePath);
+        SetProcess(false);
+        _isTrasitioning = true;
+        var tween = CreateTween();
+        tween.TweenInterval(1);
+        tween.TweenCallback(Callable.From(() => ChangeScene(nextLevelFilePath)));
     }
 
     private void ChangeScene(string sceneFilePath)
