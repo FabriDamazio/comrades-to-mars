@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://cc6xjgwn7hfou"]
+[gd_scene load_steps=10 format=3 uid="uid://cii2qpj54i5ub"]
 
-[ext_resource type="Script" uid="uid://bm7f0ssnml3ob" path="res://level/LandingPad.cs" id="1_octfv"]
-[ext_resource type="PackedScene" uid="uid://dalktvtmmtbs" path="res://player.tscn" id="2_ypwww"]
+[ext_resource type="Script" uid="uid://bm7f0ssnml3ob" path="res://level/LandingPad.cs" id="1_klklu"]
+[ext_resource type="PackedScene" uid="uid://dalktvtmmtbs" path="res://player.tscn" id="2_2loia"]
+[ext_resource type="PackedScene" uid="uid://pb6d36tjxgn0" path="res://moving_hazard.tscn" id="3_2loia"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5xgho"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -18,9 +19,6 @@ glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5xgho"]
 albedo_color = Color(0.4, 0.269333, 0.176, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lo0xd"]
-albedo_color = Color(0.796078, 0.262745, 0.831373, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u52ul"]
 albedo_color = Color(0.337255, 0.662745, 1, 1)
@@ -46,12 +44,6 @@ use_collision = true
 size = Vector3(30, 8, 5)
 material = SubResource("StandardMaterial3D_5xgho")
 
-[node name="Obstacle" type="CSGBox3D" parent="." groups=["Hazard"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.25367, 0)
-use_collision = true
-size = Vector3(8, 1, 3)
-material = SubResource("StandardMaterial3D_lo0xd")
-
 [node name="LaunchPad" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.2, 0)
 use_collision = true
@@ -63,8 +55,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.2, 0)
 use_collision = true
 size = Vector3(2, 0.4, 2)
 material = SubResource("StandardMaterial3D_vonw3")
-script = ExtResource("1_octfv")
-FilePath = "uid://cii2qpj54i5ub"
+script = ExtResource("1_klklu")
+FilePath = "uid://cg05cq6kr7tpi"
 
-[node name="Player" parent="." instance=ExtResource("2_ypwww")]
+[node name="Player" parent="." instance=ExtResource("2_2loia")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.4, 0)
+
+[node name="MovingHazard" parent="." instance=ExtResource("3_2loia")]
+Destination = Vector3(0, 2, 0)
+Duration = 3.0
