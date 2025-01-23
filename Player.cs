@@ -12,6 +12,9 @@ public partial class Player : RigidBody3D
     private AudioStreamPlayer _explosionAudio;
     private AudioStreamPlayer _successAudio;
     private AudioStreamPlayer3D _rocketAudio;
+    private GpuParticles3D _boosterParticles;
+    private GpuParticles3D _leftBoosterParticles;
+    private GpuParticles3D _rightBoosterParticles;
 
     public override void _Ready()
     {
@@ -19,6 +22,9 @@ public partial class Player : RigidBody3D
         _explosionAudio = GetNode<AudioStreamPlayer>("%ExplosionAudio");
         _successAudio = GetNode<AudioStreamPlayer>("%SuccessAudio");
         _rocketAudio = GetNode<AudioStreamPlayer3D>("%RocketAudio");
+        _boosterParticles = GetNode<GpuParticles3D>("%BoosterParticles");
+        _rightBoosterParticles = GetNode<GpuParticles3D>("%RightBoosterParticles");
+        _leftBoosterParticles = GetNode<GpuParticles3D>("%LeftBoosterParticles");
     }
 
     public override void _Process(double delta)
@@ -26,6 +32,7 @@ public partial class Player : RigidBody3D
         if (Input.IsActionPressed("boost"))
         {
             ApplyCentralForce(Basis.Y * (float)delta * Thrust);
+            _boosterParticles.Emitting = true;
 
             if (_rocketAudio.Playing is false)
             {
@@ -35,16 +42,27 @@ public partial class Player : RigidBody3D
         else
         {
             _rocketAudio.Stop();
+            _boosterParticles.Emitting = false;
         }
 
         if (Input.IsActionPressed("rotate_left"))
         {
             ApplyTorque(new Vector3(0, 0, TorqueThrust * (float)delta));
+            _rightBoosterParticles.Emitting = true;
+        }
+        else
+        {
+            _rightBoosterParticles.Emitting = false;
         }
 
         if (Input.IsActionPressed("rotate_right"))
         {
             ApplyTorque(new Vector3(0, 0, -TorqueThrust * (float)delta));
+            _leftBoosterParticles.Emitting = true;
+        }
+        else
+        {
+            _leftBoosterParticles.Emitting = false;
         }
     }
 
