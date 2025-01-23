@@ -11,12 +11,14 @@ public partial class Player : RigidBody3D
     private bool _isTrasitioning = false;
     private AudioStreamPlayer _explosionAudio;
     private AudioStreamPlayer _successAudio;
+    private AudioStreamPlayer3D _rocketAudio;
 
     public override void _Ready()
     {
         BodyEntered += OnBodyEntered;
         _explosionAudio = GetNode<AudioStreamPlayer>("%ExplosionAudio");
         _successAudio = GetNode<AudioStreamPlayer>("%SuccessAudio");
+        _rocketAudio = GetNode<AudioStreamPlayer3D>("%RocketAudio");
     }
 
     public override void _Process(double delta)
@@ -24,7 +26,17 @@ public partial class Player : RigidBody3D
         if (Input.IsActionPressed("boost"))
         {
             ApplyCentralForce(Basis.Y * (float)delta * Thrust);
+
+            if (_rocketAudio.Playing is false)
+            {
+                _rocketAudio.Play();
+            }
         }
+        else
+        {
+            _rocketAudio.Stop();
+        }
+
         if (Input.IsActionPressed("rotate_left"))
         {
             ApplyTorque(new Vector3(0, 0, TorqueThrust * (float)delta));
