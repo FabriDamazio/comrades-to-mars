@@ -9,10 +9,14 @@ public partial class Player : RigidBody3D
     public float TorqueThrust = 100.0f;
 
     private bool _isTrasitioning = false;
+    private AudioStreamPlayer _explosionAudio;
+    private AudioStreamPlayer _successAudio;
 
     public override void _Ready()
     {
         BodyEntered += OnBodyEntered;
+        _explosionAudio = GetNode<AudioStreamPlayer>("%ExplosionAudio");
+        _successAudio = GetNode<AudioStreamPlayer>("%SuccessAudio");
     }
 
     public override void _Process(double delta)
@@ -52,10 +56,11 @@ public partial class Player : RigidBody3D
     private void CrashSequence()
     {
         GD.Print("KABOOM!");
+        _explosionAudio.Play();
         SetProcess(false);
         _isTrasitioning = true;
         var tween = CreateTween();
-        tween.TweenInterval(1);
+        tween.TweenInterval(2.5);
         tween.TweenCallback(Callable.From(ReloadScene));
     }
 
@@ -67,10 +72,11 @@ public partial class Player : RigidBody3D
     private void CompleteLevel(string nextLevelFilePath)
     {
         GD.Print("Level Complete");
+        _successAudio.Play();
         SetProcess(false);
         _isTrasitioning = true;
         var tween = CreateTween();
-        tween.TweenInterval(1);
+        tween.TweenInterval(2.5);
         tween.TweenCallback(Callable.From(() => ChangeScene(nextLevelFilePath)));
     }
 
