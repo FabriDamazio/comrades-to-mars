@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dalktvtmmtbs"]
+[gd_scene load_steps=15 format=3 uid="uid://dalktvtmmtbs"]
 
 [ext_resource type="Script" uid="uid://bn45d0oi5ji3w" path="res://Player.cs" id="1_4flbx"]
 [ext_resource type="AudioStream" uid="uid://b0gfy5fdyvy24" path="res://audio/SFX - Death Explosion.ogg" id="2_onrkg"]
@@ -9,6 +9,38 @@
 [sub_resource type="CylinderMesh" id="CylinderMesh_4flbx"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_4flbx"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_sweqy"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 1.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2hs0m"]
+top_radius = 0.0
+bottom_radius = 0.2
+height = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1jxqw"]
+top_radius = 0.25
+bottom_radius = 0.25
+height = 0.3
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_dw050"]
+top_radius = 0.25
+bottom_radius = 0.25
+height = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_b26j0"]
+size = Vector3(0.2, 0.4, 0.2)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_n7ghd"]
+top_radius = 0.15
+bottom_radius = 0.15
+height = 0.4
+
+[sub_resource type="TorusMesh" id="TorusMesh_sweqy"]
+inner_radius = 0.4
+outer_radius = 0.5
 
 [node name="Player" type="RigidBody3D"]
 axis_lock_linear_z = true
@@ -21,6 +53,7 @@ angular_damp = 3.0
 script = ExtResource("1_4flbx")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("CylinderMesh_4flbx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -40,12 +73,50 @@ stream = ExtResource("4_hqtel")
 
 [node name="BoosterParticles" parent="." instance=ExtResource("5_sweqy")]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.988624, 0)
 
 [node name="RightBoosterParticles" parent="." instance=ExtResource("5_sweqy")]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, -1, 0)
+transform = Transform3D(0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, 0.445503, -0.882158, 0)
 
 [node name="LeftBoosterParticles" parent="." instance=ExtResource("5_sweqy")]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, -1, 0)
+transform = Transform3D(0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0, 1, -0.448347, -0.876621, 0)
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+mesh = SubResource("CylinderMesh_sweqy")
+
+[node name="Cockpit" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CylinderMesh_2hs0m")
+skeleton = NodePath("../..")
+
+[node name="Midriff" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("CylinderMesh_1jxqw")
+
+[node name="Thruster" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.55, 0)
+mesh = SubResource("CylinderMesh_dw050")
+
+[node name="LeftArm" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 0, 0, 1, -0.265765, -0.190181, 0)
+mesh = SubResource("BoxMesh_b26j0")
+
+[node name="Thruster" type="MeshInstance3D" parent="Body/LeftArm"]
+transform = Transform3D(0.71934, -0.694658, 0, 0.694658, 0.71934, 0, 0, 0, 1, 0.0912125, -0.284436, 0)
+mesh = SubResource("CylinderMesh_n7ghd")
+
+[node name="RightArm" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(0.642788, -0.766044, 0, 0.766044, 0.642788, 0, 0, 0, 1, 0.266, -0.19, 0)
+mesh = SubResource("BoxMesh_b26j0")
+
+[node name="Thruster" type="MeshInstance3D" parent="Body/RightArm"]
+transform = Transform3D(0.71934, 0.694659, 0, -0.694659, 0.71934, 0, 0, 0, 1, -0.091, -0.284, 0)
+mesh = SubResource("CylinderMesh_n7ghd")
+skeleton = NodePath("../../LeftArm")
+
+[node name="BaseRing" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.53315, 0)
+mesh = SubResource("TorusMesh_sweqy")
