@@ -1,10 +1,12 @@
-[gd_scene load_steps=23 format=3 uid="uid://dalktvtmmtbs"]
+[gd_scene load_steps=25 format=3 uid="uid://dalktvtmmtbs"]
 
 [ext_resource type="Script" uid="uid://bn45d0oi5ji3w" path="res://Player.cs" id="1_4flbx"]
 [ext_resource type="AudioStream" uid="uid://b0gfy5fdyvy24" path="res://audio/SFX - Death Explosion.ogg" id="2_onrkg"]
 [ext_resource type="AudioStream" uid="uid://cqe13a3ew67pm" path="res://audio/SFX - Success.ogg" id="3_i3pqv"]
 [ext_resource type="AudioStream" uid="uid://b2pb57gpxguxt" path="res://audio/SFX - Main engine thrust.ogg" id="4_hqtel"]
-[ext_resource type="PackedScene" uid="uid://ux6ivcx1ovdp" path="res://booster_particles.tscn" id="5_sweqy"]
+[ext_resource type="PackedScene" uid="uid://ux6ivcx1ovdp" path="res://particles/booster_particles.tscn" id="5_sweqy"]
+[ext_resource type="PackedScene" uid="uid://dcecb8hw7dbrv" path="res://particles/explosion_particles.tscn" id="6_1jxqw"]
+[ext_resource type="PackedScene" uid="uid://jfwajmrh6ca7" path="res://particles/success_particles.tscn" id="7_dw050"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_4flbx"]
 
@@ -177,3 +179,9 @@ shape = SubResource("ConvexPolygonShape3D_ivps1")
 [node name="CollisionShape3D9" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.78315, 0)
 shape = SubResource("ConvexPolygonShape3D_urp6f")
+
+[node name="ExplosionParticles" parent="." instance=ExtResource("6_1jxqw")]
+unique_name_in_owner = true
+
+[node name="SuccessParticles" parent="." instance=ExtResource("7_dw050")]
+unique_name_in_owner = true

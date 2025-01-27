@@ -15,6 +15,8 @@ public partial class Player : RigidBody3D
     private GpuParticles3D _boosterParticles;
     private GpuParticles3D _leftBoosterParticles;
     private GpuParticles3D _rightBoosterParticles;
+    private GpuParticles3D _explosionParticles;
+    private GpuParticles3D _successParticles;
 
     public override void _Ready()
     {
@@ -25,6 +27,8 @@ public partial class Player : RigidBody3D
         _boosterParticles = GetNode<GpuParticles3D>("%BoosterParticles");
         _rightBoosterParticles = GetNode<GpuParticles3D>("%RightBoosterParticles");
         _leftBoosterParticles = GetNode<GpuParticles3D>("%LeftBoosterParticles");
+        _explosionParticles = GetNode<GpuParticles3D>("%ExplosionParticles");
+        _successParticles = GetNode<GpuParticles3D>("%SuccessParticles");
     }
 
     public override void _Process(double delta)
@@ -86,6 +90,7 @@ public partial class Player : RigidBody3D
     private void CrashSequence()
     {
         GD.Print("KABOOM!");
+        _explosionParticles.Emitting = true;
         _explosionAudio.Play();
         SetProcess(false);
         _isTrasitioning = true;
@@ -102,6 +107,7 @@ public partial class Player : RigidBody3D
     private void CompleteLevel(string nextLevelFilePath)
     {
         GD.Print("Level Complete");
+        _successParticles.Emitting = true;
         _successAudio.Play();
         SetProcess(false);
         _isTrasitioning = true;
