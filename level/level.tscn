@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bm7f0ssnml3ob" path="res://level/LandingPad.cs" id="1_5gx2l"]
 [ext_resource type="PackedScene" uid="uid://dalktvtmmtbs" path="res://player.tscn" id="1_7lnir"]
+[ext_resource type="PackedScene" uid="uid://cc824n4vluk6u" path="res://background.tscn" id="1_qohg2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5xgho"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -15,9 +16,6 @@ background_mode = 2
 sky = SubResource("Sky_u52ul")
 tonemap_mode = 2
 glow_enabled = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5xgho"]
-albedo_color = Color(0.4, 0.269333, 0.176, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u52ul"]
 albedo_color = Color(0.337255, 0.662745, 1, 1)
@@ -37,11 +35,8 @@ shadow_enabled = true
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.978148, 0.207912, 0, -0.207912, 0.978148, 0, 4.5, 7.8)
 
-[node name="Floor" type="CSGBox3D" parent="." groups=["Hazard"]]
+[node name="Floor" parent="." instance=ExtResource("1_qohg2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
-use_collision = true
-size = Vector3(30, 8, 5)
-material = SubResource("StandardMaterial3D_5xgho")
 
 [node name="LaunchPad" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.2, 0)
