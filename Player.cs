@@ -68,6 +68,11 @@ public partial class Player : RigidBody3D
         {
             _leftBoosterParticles.Emitting = false;
         }
+
+        if (Input.IsActionJustPressed("ui_cancel"))
+        {
+            GetTree().Quit();
+        }
     }
 
     private void OnBodyEntered(Node body)
